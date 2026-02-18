@@ -278,3 +278,78 @@ document.addEventListener("click", function () {
         runnerPlayer.dy = -8;
     }
 });
+/* ============================= */
+/* MEMORY MATCH LOVE GAME */
+/* ============================= */
+
+let memoryEmojis = ["🥞","💖","💌","🧁","💕","🌸"];
+let memoryCards = [];
+let firstCard = null;
+let secondCard = null;
+let lockBoard = false;
+let moves = 0;
+
+function openMemoryGame() {
+    document.getElementById("memoryGamePopup").style.display = "flex";
+    startMemoryGame();
+}
+
+function closeMemoryGame() {
+    document.getElementById("memoryGamePopup").style.display = "none";
+}
+
+function startMemoryGame() {
+    const board = document.getElementById("memoryBoard");
+    board.innerHTML = "";
+    moves = 0;
+    document.getElementById("memoryMoves").innerText = "Moves: 0";
+
+    memoryCards = [...memoryEmojis, ...memoryEmojis]
+        .sort(() => 0.5 - Math.random());
+
+    memoryCards.forEach(emoji => {
+        const card = document.createElement("div");
+        card.classList.add("memory-card");
+        card.dataset.emoji = emoji;
+        card.innerText = "❓";
+        card.addEventListener("click", flipCard);
+        board.appendChild(card);
+    });
+}
+
+function flipCard() {
+    if (lockBoard) return;
+    if (this === firstCard) return;
+
+    this.innerText = this.dataset.emoji;
+
+    if (!firstCard) {
+        firstCard = this;
+        return;
+    }
+
+    secondCard = this;
+    moves++;
+    document.getElementById("memoryMoves").innerText = "Moves: " + moves;
+
+    if (firstCard.dataset.emoji === secondCard.dataset.emoji) {
+        resetTurn();
+    } else {
+        lockBoard = true;
+        setTimeout(() => {
+            firstCard.innerText = "❓";
+            secondCard.innerText = "❓";
+            resetTurn();
+        }, 800);
+    }
+}
+
+function resetTurn() {
+    firstCard = null;
+    secondCard = null;
+    lockBoard = false;
+}
+
+function restartMemoryGame() {
+    startMemoryGame();
+}
