@@ -136,5 +136,44 @@ Tap to see 🙈
 </div>
 <script src="main.js"></script>
 <img src="chibi.png" id="animeSprite">
+<!-- Retro Emulator Box -->
+<div class="note">
+  <h2>Retro Classic 🎮</h2>
+  <button onclick="openRetroEmulator()">Play Retro Game</button>
+</div>
+
+<div id="retroPopup" class="game-popup" style="display:none;">
+  <div class="game-content">
+    <canvas id="nesCanvas" width="512" height="480"></canvas>
+    <br><br>
+    <button onclick="closeRetroEmulator()">Close</button>
+  </div>
+</div>
+    <!-- Pixel Runner Box -->
+<div class="note">
+  <h2>Pixel Love Runner 🕹</h2>
+  <button onclick="openPixelGame()">Play Pixel Game</button>
+</div>
+
+<div id="pixelPopup" class="game-popup" style="display:none;">
+  <div class="game-content">
+    <canvas id="pixelCanvas" width="600" height="300"></canvas>
+    <br><br>
+    <button onclick="closePixelGame()">Close</button>
+  </div>
+</div>
+    <!-- 8-Bit Adventure -->
+<div class="note">
+  <h2>8-Bit Love Quest 👾</h2>
+  <button onclick="openQuest()">Start Quest</button>
+</div>
+
+<div id="questPopup" class="game-popup" style="display:none;">
+  <div class="game-content">
+    <canvas id="questCanvas" width="600" height="350"></canvas>
+    <br><br>
+    <button onclick="closeQuest()">Close</button>
+  </div>
+</div>
 </body>
 </html>
