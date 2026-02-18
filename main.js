@@ -18,3 +18,8 @@ function createHeart() {
 }
 
 setInterval(createHeart, 800);
+// Secret Surprise Popup
+
+setTimeout(() => {
+    alert("🎁 Surpriseeee 💕\nMumma 🩷 ,you are the best jn this world 💌 ,I love you so much ❤️ 😘");
+}, 3000);
