@@ -29,3 +29,20 @@
     max-width: 500px;
     border-radius: 15px;
 }
+/* =============================== */
+/* 🔁 RESTORE ORIGINAL PAGE STYLE */
+/* =============================== */
+
+.notes-body {
+    background-color: #fff0f5 !important;
+    padding: 20px;
+}
+
+.note {
+    background: white !important;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 20px;
+    width: 90%;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
