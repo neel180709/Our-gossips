@@ -290,7 +290,9 @@ let lockBoard = false;
 let moves = 0;
 
 function openMemoryGame() {
-    document.getElementById("memoryGamePopup").style.display = "flex";
+    const popup = document.getElementById("memoryGamePopup");
+    if (!popup) return;
+    popup.style.display = "flex";
     startMemoryGame();
 }
 
