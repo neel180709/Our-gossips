@@ -70,3 +70,17 @@ body {
     max-width: 500px;
     border-radius: 15px;
 }
+#animeSprite {
+    position: fixed;
+    bottom: 0;
+    left: 10px;
+    width: 130px;
+    animation: idleMove 2s ease-in-out infinite;
+    z-index: 4000;
+}
+
+@keyframes idleMove {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0px); }
+}
