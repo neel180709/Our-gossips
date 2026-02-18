@@ -18,7 +18,10 @@ function createHeart() {
 }
 
 setInterval(createHeart, 800);
-// Secret Surprise Popup
-document.body.addEventListener("click", function() {
-    alert("💌 Secret Message: Mumma 🩷 ,you are the best mumma 💕 in the whole world 💌I love you more than your bobo 😘");
+// Secret Surprise Popup (Only Once)
+
+document.body.addEventListener("click", function showMessage() {
+    alert("💌 Secret Message: Mumma 🩷, you are the best mumma 💕 in the whole world 💌 I love you more than your bobo 😘");
+    
+    document.body.removeEventListener("click", showMessage);
 });
