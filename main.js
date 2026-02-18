@@ -355,3 +355,106 @@ function resetTurn() {
 function restartMemoryGame() {
     startMemoryGame();
 }
+function openRetroEmulator() {
+    document.getElementById("retroPopup").style.display = "flex";
+}
+
+function closeRetroEmulator() {
+    document.getElementById("retroPopup").style.display = "none";
+}
+function openPixelGame() {
+    document.getElementById("pixelPopup").style.display = "flex";
+    startPixelGame();
+}
+
+function closePixelGame() {
+    document.getElementById("pixelPopup").style.display = "none";
+}
+
+function startPixelGame() {
+    const canvas = document.getElementById("pixelCanvas");
+    const ctx = canvas.getContext("2d");
+
+    let player = { x: 50, y: 200, width: 30, height: 30, dy: 0 };
+    let gravity = 0.6;
+    let jumping = false;
+
+    document.addEventListener("keydown", function(e) {
+        if (e.code === "Space" && !jumping) {
+            player.dy = -12;
+            jumping = true;
+        }
+    });
+
+    function update() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        player.dy += gravity;
+        player.y += player.dy;
+
+        if (player.y >= 200) {
+            player.y = 200;
+            player.dy = 0;
+            jumping = false;
+        }
+
+        ctx.fillStyle = "pink";
+        ctx.fillRect(player.x, player.y, player.width, player.height);
+
+        ctx.fillStyle = "red";
+        ctx.fillText("Press SPACE to Jump ❤️", 200, 50);
+
+        requestAnimationFrame(update);
+    }
+
+    update();
+}
+function openQuest() {
+    document.getElementById("questPopup").style.display = "flex";
+    startQuest();
+}
+
+function closeQuest() {
+    document.getElementById("questPopup").style.display = "none";
+}
+
+function startQuest() {
+    const canvas = document.getElementById("questCanvas");
+    const ctx = canvas.getContext("2d");
+
+    let player = { x: 50, y: 250, size: 25 };
+    let hearts = [
+        { x: 300, y: 250 },
+        { x: 450, y: 250 }
+    ];
+
+    document.addEventListener("keydown", function(e) {
+        if (e.code === "ArrowRight") player.x += 10;
+        if (e.code === "ArrowLeft") player.x -= 10;
+    });
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "lightblue";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "green";
+        ctx.fillRect(0, 275, canvas.width, 75);
+
+        ctx.fillStyle = "purple";
+        ctx.fillRect(player.x, player.y, player.size, player.size);
+
+        ctx.fillStyle = "red";
+        hearts.forEach(h => {
+            ctx.fillRect(h.x, h.y, 20, 20);
+        });
+
+        ctx.fillStyle = "black";
+        ctx.fillText("Collect the Love Hearts ❤️", 200, 40);
+
+        requestAnimationFrame(draw);
+    }
+
+    draw();
+}
