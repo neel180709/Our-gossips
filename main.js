@@ -186,3 +186,95 @@ function startPancakeGame() {
 function endGame() {
     document.getElementById("gameContainer").style.display = "none";
 }
+/* ============================= */
+/* LOVE RUNNER GAME SCRIPT */
+/* ============================= */
+
+let runnerCanvas, runnerCtx;
+let runnerPlayer, runnerObstacles;
+let runnerScore = 0;
+let runnerGameRunning = false;
+
+function openLoveRunner() {
+    document.getElementById("loveRunnerPopup").style.display = "flex";
+    startLoveRunner();
+}
+
+function closeLoveRunner() {
+    runnerGameRunning = false;
+    document.getElementById("loveRunnerPopup").style.display = "none";
+}
+
+function startLoveRunner() {
+    runnerCanvas = document.getElementById("loveRunnerCanvas");
+    runnerCtx = runnerCanvas.getContext("2d");
+
+    runnerCanvas.width = runnerCanvas.offsetWidth;
+    runnerCanvas.height = 200;
+
+    runnerPlayer = { x: 50, y: 150, width: 30, height: 30, dy: 0, jumping: false };
+    runnerObstacles = [];
+    runnerScore = 0;
+    runnerGameRunning = true;
+
+    spawnObstacle();
+    requestAnimationFrame(updateLoveRunner);
+}
+
+function spawnObstacle() {
+    if (!runnerGameRunning) return;
+    runnerObstacles.push({ x: runnerCanvas.width, y: 160, width: 25, height: 25 });
+    setTimeout(spawnObstacle, 1500);
+}
+
+function updateLoveRunner() {
+    if (!runnerGameRunning) return;
+
+    runnerCtx.clearRect(0, 0, runnerCanvas.width, runnerCanvas.height);
+
+    // Draw Player
+    runnerCtx.font = "30px Arial";
+    runnerCtx.fillText("💕", runnerPlayer.x, runnerPlayer.y);
+
+    // Gravity
+    if (runnerPlayer.jumping) {
+        runnerPlayer.dy += 0.5;
+        runnerPlayer.y += runnerPlayer.dy;
+        if (runnerPlayer.y >= 150) {
+            runnerPlayer.y = 150;
+            runnerPlayer.jumping = false;
+        }
+    }
+
+    // Obstacles
+    runnerCtx.font = "25px Arial";
+    for (let i = 0; i < runnerObstacles.length; i++) {
+        let obs = runnerObstacles[i];
+        obs.x -= 4;
+        runnerCtx.fillText("💔", obs.x, obs.y);
+
+        // Collision
+        if (
+            obs.x < runnerPlayer.x + 20 &&
+            obs.x + 20 > runnerPlayer.x &&
+            runnerPlayer.y > 120
+        ) {
+            runnerGameRunning = false;
+            alert("Game Over 💔 Final Score: " + runnerScore);
+            return;
+        }
+    }
+
+    runnerScore++;
+    document.getElementById("runnerScore").innerText = "Score: " + runnerScore;
+
+    requestAnimationFrame(updateLoveRunner);
+}
+
+// Jump control (Mobile + Desktop)
+document.addEventListener("click", function () {
+    if (runnerGameRunning && !runnerPlayer.jumping) {
+        runnerPlayer.jumping = true;
+        runnerPlayer.dy = -8;
+    }
+});
