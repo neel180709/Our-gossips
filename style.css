@@ -84,3 +84,32 @@ body {
     50% { transform: translateY(-8px); }
     100% { transform: translateY(0px); }
 }
+/* ============================= */
+/* LOVE RUNNER GAME STYLE */
+/* ============================= */
+
+.game-popup {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.game-content {
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+    width: 95%;
+    max-width: 400px;
+}
+
+#loveRunnerCanvas {
+    background: #fff0f5;
+    width: 100%;
+    height: 200px;
+    border-radius: 10px;
+}
