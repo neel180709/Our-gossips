@@ -355,10 +355,35 @@ function resetTurn() {
 function restartMemoryGame() {
     startMemoryGame();
 }
+let nes;
+
 function openRetroEmulator() {
     document.getElementById("retroPopup").style.display = "flex";
-}
 
+    const canvas = document.getElementById("nesCanvas");
+    const ctx = canvas.getContext("2d");
+
+    const imageData = ctx.createImageData(256, 240);
+
+    nes = new jsnes.NES({
+        onFrame: function(frameBuffer) {
+            for (let i = 0; i < frameBuffer.length; i++) {
+                imageData.data[i * 4] = frameBuffer[i] >> 16 & 0xFF;
+                imageData.data[i * 4 + 1] = frameBuffer[i] >> 8 & 0xFF;
+                imageData.data[i * 4 + 2] = frameBuffer[i] & 0xFF;
+                imageData.data[i * 4 + 3] = 0xFF;
+            }
+            ctx.putImageData(imageData, 0, 0);
+        }
+    });
+
+    fetch("game.nes")
+        .then(res => res.arrayBuffer())
+        .then(data => {
+            nes.loadROM(data);
+            setInterval(() => nes.frame(), 1000 / 60);
+        });
+}
 function closeRetroEmulator() {
     document.getElementById("retroPopup").style.display = "none";
 }
