@@ -19,7 +19,6 @@ function createHeart() {
 
 setInterval(createHeart, 800);
 // Secret Surprise Popup
-
-setTimeout(() => {
-    alert("🎁 Surpriseeee 💕\nMumma 🩷 ,you are the best jn this world 💌 ,I love you so much ❤️ 😘");
-}, 3000);
+document.body.addEventListener("click", function() {
+    alert("💌 Secret Message: Mumma 🩷 ,you are the best mumma 💕 in the whole world 💌I love you more than your bobo 😘");
+});
