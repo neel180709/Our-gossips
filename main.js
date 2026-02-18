@@ -371,15 +371,21 @@ function closePixelGame() {
     document.getElementById("pixelPopup").style.display = "none";
 }
 
+let pixelGameStarted = false;
+
 function startPixelGame() {
+    if (pixelGameStarted) return;
+    pixelGameStarted = true;
+
     const canvas = document.getElementById("pixelCanvas");
+    if (!canvas) return;
     const ctx = canvas.getContext("2d");
 
     let player = { x: 50, y: 200, width: 30, height: 30, dy: 0 };
     let gravity = 0.6;
     let jumping = false;
 
-    document.addEventListener("keydown", function(e) {
+    window.addEventListener("keydown", function(e) {
         if (e.code === "Space" && !jumping) {
             player.dy = -12;
             jumping = true;
@@ -418,8 +424,14 @@ function closeQuest() {
     document.getElementById("questPopup").style.display = "none";
 }
 
+let questStarted = false;
+
 function startQuest() {
+    if (questStarted) return;
+    questStarted = true;
+
     const canvas = document.getElementById("questCanvas");
+    if (!canvas) return;
     const ctx = canvas.getContext("2d");
 
     let player = { x: 50, y: 250, size: 25 };
@@ -428,7 +440,7 @@ function startQuest() {
         { x: 450, y: 250 }
     ];
 
-    document.addEventListener("keydown", function(e) {
+    window.addEventListener("keydown", function(e) {
         if (e.code === "ArrowRight") player.x += 10;
         if (e.code === "ArrowLeft") player.x -= 10;
     });
