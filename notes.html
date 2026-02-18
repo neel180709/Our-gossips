@@ -82,3 +82,24 @@ Tap to see 🙈
 <script src="main.js"></script>
 </body>
 </html>
+<!-- 🌸 NEW GAME BOX -->
+<div class="note" id="pancake-game-box">
+<h2>Catch your pancake 🥞 game, tap to play!</h2>
+<p>Move the basket 🧺 at the bottom and catch the falling pancakes 🥞. The game lasts 1 minute!</p>
+<button onclick="startPancakeGame()">Play Now 🍴</button>
+</div>
+
+<!-- 🎮 Pancake Game Elements (hidden initially) -->
+<div id="gameContainer" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(255,192,203,0.95); z-index:9999;">
+    <div id="gameScore" style="font-size:24px; text-align:center; margin-top:10px;">Score: 0</div>
+    <div id="gameArea" style="position:relative; width:100%; height:80%; overflow:hidden;"></div>
+    <div style="position:absolute; bottom:20px; width:100%; text-align:center;">
+        <span id="basket" style="font-size:50px; cursor:pointer; position:relative;">🧺</span>
+    </div>
+    <div id="gameOverScreen" style="display:none; text-align:center; margin-top:50px;">
+        <h2>Time's Up! 🎉</h2>
+        <p id="finalScore"></p>
+        <button onclick="startPancakeGame()">Play Again 🔄</button>
+        <button onclick="endGame()">Quit ❌</button>
+    </div>
+</div>
