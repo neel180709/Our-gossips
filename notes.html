@@ -78,25 +78,7 @@ Tap to see 🙈
 <div id="videoModal" class="modal">
     <video id="popupVideo" controls></video>
 </div>
-<!-- 🎮 Memory Match Love Game Box -->
-<div class="note">
-    <h2>Memory Match Love 💕</h2>
-    <p>Match the love emojis 💌 Tap to Play</p>
-    <button onclick="openMemoryGame()">Play Memory Game</button>
-</div>
 
-<!-- Memory Game Popup -->
-<div id="memoryGamePopup" class="game-popup">
-    <div class="game-content">
-        <h2>Memory Match 💕</h2>
-        <div id="memoryBoard"></div>
-        <p id="memoryMoves">Moves: 0</p>
-        <button onclick="restartMemoryGame()">Restart 🔄</button>
-        <button onclick="closeMemoryGame()">Quit ❌</button>
-    </div>
-</div>
-<script src="main.js"></script>
-<img src="chibi.png" id="animeSprite">
 
     
 <!-- 🌸 NEW GAME BOX -->
@@ -136,5 +118,24 @@ Tap to see 🙈
         <button onclick="closeLoveRunner()">Quit</button>
     </div>
 </div>
+<!-- 🎮 Memory Match Love Game Box -->
+<div class="note">
+    <h2>Memory Match Love 💕</h2>
+    <p>Match the love emojis 💌 Tap to Play</p>
+    <button onclick="openMemoryGame()">Play Memory Game</button>
+</div>
+
+<!-- Memory Game Popup -->
+<div id="memoryGamePopup" class="game-popup">
+    <div class="game-content">
+        <h2>Memory Match 💕</h2>
+        <div id="memoryBoard"></div>
+        <p id="memoryMoves">Moves: 0</p>
+        <button onclick="restartMemoryGame()">Restart 🔄</button>
+        <button onclick="closeMemoryGame()">Quit ❌</button>
+    </div>
+</div>
+<script src="main.js"></script>
+<img src="chibi.png" id="animeSprite">
 </body>
 </html>
