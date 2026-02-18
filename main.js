@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 // ===============================
-// 🥞 Pancake Catching Game
+// 🥞 Pancake Catching Game (Improved Dragging & Bigger Basket)
 // ===============================
 
 function startPancakeGame() {
@@ -83,13 +83,53 @@ function startPancakeGame() {
 
     let score = 0;
     scoreDisplay.textContent = "Score: 0";
-    const gameDuration = 60000; // 1 minute
-    let basketPos = window.innerWidth / 2;
 
-    // Move basket with mouse
+    // Make basket bigger ×4
+    basket.style.fontSize = "200px"; // approx 4 times emoji
+    basket.style.position = "absolute";
+    basket.style.bottom = "20px";
+    basket.style.left = window.innerWidth / 2 - 100 + "px"; // start at center
+    basket.style.cursor = "grab";
+
+    let basketPosX = basket.offsetLeft;
+    let isDragging = false;
+    let offsetX = 0;
+
+    // Mouse drag
+    basket.onmousedown = function(e) {
+        isDragging = true;
+        offsetX = e.clientX - basket.offsetLeft;
+        basket.style.cursor = "grabbing";
+    };
+
+    document.onmouseup = function() {
+        isDragging = false;
+        basket.style.cursor = "grab";
+    };
+
     document.onmousemove = function(e) {
-        basketPos = e.clientX;
-        basket.style.left = (basketPos - 25) + "px";
+        if (isDragging) {
+            basketPosX = e.clientX - offsetX;
+            // Restrict basket within screen
+            basketPosX = Math.max(0, Math.min(window.innerWidth - basket.offsetWidth, basketPosX));
+            basket.style.left = basketPosX + "px";
+        }
+    };
+
+    // Touch drag (mobile-friendly)
+    basket.ontouchstart = function(e) {
+        isDragging = true;
+        offsetX = e.touches[0].clientX - basket.offsetLeft;
+    };
+    basket.ontouchend = function() {
+        isDragging = false;
+    };
+    basket.ontouchmove = function(e) {
+        if (isDragging) {
+            basketPosX = e.touches[0].clientX - offsetX;
+            basketPosX = Math.max(0, Math.min(window.innerWidth - basket.offsetWidth, basketPosX));
+            basket.style.left = basketPosX + "px";
+        }
     };
 
     // Create falling pancakes
@@ -140,7 +180,7 @@ function startPancakeGame() {
         clearInterval(moveInterval);
         gameOverScreen.style.display = "block";
         finalScoreText.textContent = "You pocketed " + score + " pancakes 🥞!";
-    }, gameDuration);
+    }, 60000);
 }
 
 function endGame() {
