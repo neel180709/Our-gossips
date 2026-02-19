@@ -152,3 +152,9 @@ body {
     display: block;
     margin: 15px auto;
 }
+@keyframes fall {
+    to {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+}
