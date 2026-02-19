@@ -135,8 +135,28 @@ Tap to see 🙈
     </div>
 </div>
 
+<!-- 🎹 Love Piano Game -->
+<div class="note">
+    <h2>Love Piano 🎹</h2>
+    <p>Press A S D F G on keyboard to play romantic notes 💕</p>
+    <button onclick="openPiano()">Play Piano</button>
+</div>
 
-    <img src="chibi.png" id="animeSprite>
+<div id="pianoPopup" class="game-popup" style="display:none;">
+    <div class="game-content">
+        <h2>Love Piano 🎹</h2>
+        <div id="piano" style="display:flex; justify-content:center;">
+            <div class="pianoKey" data-note="C">A</div>
+            <div class="pianoKey" data-note="D">S</div>
+            <div class="pianoKey" data-note="E">D</div>
+            <div class="pianoKey" data-note="F">F</div>
+            <div class="pianoKey" data-note="G">G</div>
+        </div>
+        <br>
+        <button onclick="closePiano()">Close ❌</button>
+    </div>
+</div>
+    <img src="chibi.png" id="animeSprite">
 <script src="main.js"></script>
 </body>
 </html>
