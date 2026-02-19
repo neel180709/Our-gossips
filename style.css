@@ -158,3 +158,20 @@ body {
         opacity: 0;
     }
 }
+.flower-top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 180px;   /* adjust size if needed */
+    z-index: 0;
+    pointer-events: none;
+}
+
+.flower-bottom {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 200px;   /* adjust size */
+    z-index: 0;
+    pointer-events: none;
+}
