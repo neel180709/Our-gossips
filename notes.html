@@ -163,5 +163,91 @@ Tap to see 🙈
 </div>
     <img src="chibi.png" id="animeSprite">
 <script src="main.js"></script>
+    <!-- 💖 Special Treatment Video Box -->
+<div class="note">
+<h2>Secret Treatment Video 🤫</h2>
+<p>
+THIS VIDEO IS FOR TREATMENT OF YOUR PERIOD CRAMPS WHEN YOU MISS ME,  
+HENCE, THIS WILL BE OPENED ONLY WHEN YOU HIT THE FIRST DAY OF YOUR PERIODS 🤫
+</p>
+
+<input type="password" id="treatmentPass" placeholder="Enter Secret Password">
+<br><br>
+<button onclick="unlockTreatment()">Unlock 💌</button>
+<p id="treatmentError" style="color:red;"></p>
+</div>
+
+<!-- Hidden Treatment Popup -->
+<div id="treatmentPopup" style="display:none; position:fixed; inset:0; background:rgba(255,192,203,0.95); z-index:99999; overflow:hidden; text-align:center; padding:20px;">
+
+<div style="background:white; max-width:600px; margin:40px auto; padding:20px; border-radius:15px;">
+<p style="font-size:18px;">
+Meri bachchi 💌, Don't worry, yeh time jald hi nikal jaayega, main hun na tumhaare saath,  
+kuchh nahin hoga tumhe 🩷, tum bas rest karo, achha khao piyo aur jis care ki zarurat ho mujhe batao,  
+baaki agar meri zyaada yaad aa rahi hai to yeh niche di hui video kholkar dekhlo 💌,  
+I hope you will like it 🤭
+</p>
+
+<br>
+<button onclick="playTreatment()">Play Video 💖</button>
+<br><br>
+<button onclick="closeTreatment()">Close ❌</button>
+
+<br><br>
+<video id="treatmentVideo" width="100%" controls style="display:none; border-radius:10px;">
+<source src="treatment.mp4" type="video/mp4">
+</video>
+</div>
+
+<!-- Falling Emoji Container -->
+<div id="emojiContainer"></div>
+
+</div>
+   <script>
+function unlockTreatment() {
+
+    var pass = document.getElementById("treatmentPass").value;
+
+    if(pass === "periodcare") {   // YOU CAN CHANGE PASSWORD HERE
+        document.getElementById("treatmentPopup").style.display = "block";
+        startHearts();
+    } else {
+        document.getElementById("treatmentError").innerText = "Wrong password 💔";
+    }
+}
+
+function closeTreatment() {
+    document.getElementById("treatmentPopup").style.display = "none";
+    document.getElementById("treatmentVideo").pause();
+}
+
+function playTreatment() {
+    document.getElementById("treatmentVideo").style.display = "block";
+    document.getElementById("treatmentVideo").play();
+}
+
+/* Falling Emojis */
+function startHearts() {
+
+    const emojis = ["🥰","🤭","🩷","💖","❣️","💗","❤️","💕","🩵","💟","💌","💓","💋"];
+    const container = document.getElementById("emojiContainer");
+
+    setInterval(() => {
+        const heart = document.createElement("div");
+        heart.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+
+        heart.style.position = "fixed";
+        heart.style.left = Math.random()*100 + "vw";
+        heart.style.top = "-30px";
+        heart.style.fontSize = "24px";
+        heart.style.animation = "fall 4s linear forwards";
+
+        container.appendChild(heart);
+
+        setTimeout(()=> heart.remove(),4000);
+
+    },300);
+}
+   </script> 
 </body>
 </html
