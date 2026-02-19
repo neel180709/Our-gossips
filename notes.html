@@ -4,7 +4,7 @@
 <title>Our Little World 💕</title>
 <link rel="stylesheet" href="style.css">
 </head>
-
+<script src="https://unpkg.com/jsnes/dist/jsnes.min.js"></script>
 <body class="notes-body">
 
 <script>
@@ -163,5 +163,88 @@ Tap to see 🙈
 </div>
     <img src="chibi.png" id="animeSprite">
 <script src="main.js"></script>
+    <!-- 🎮 NES Game Box -->
+<div style="background:white; padding:20px; margin:40px auto; width:650px; text-align:center; border-radius:12px;">
+    <h2>Play NES Game 🎮</h2>
+    <canvas id="nesCanvas" width="256" height="240" style="border:2px solid black;"></canvas>
+    <br><br>
+    <button onclick="startNES()">Run Game</button>
+</div>
+    <script>
+let nes;
+let frameBuffer;
+let imageData;
+let interval;
+
+function startNES() {
+
+    const canvas = document.getElementById("nesCanvas");
+    const ctx = canvas.getContext("2d");
+
+    imageData = ctx.createImageData(256, 240);
+
+    nes = new jsnes.NES({
+        onFrame: function(frameBuffer_) {
+            for (let i = 0; i < frameBuffer_.length; i++) {
+                const color = frameBuffer_[i];
+                imageData.data[i * 4 + 0] = (color >> 16) & 0xFF;
+                imageData.data[i * 4 + 1] = (color >> 8) & 0xFF;
+                imageData.data[i * 4 + 2] = color & 0xFF;
+                imageData.data[i * 4 + 3] = 0xFF;
+            }
+            ctx.putImageData(imageData, 0, 0);
+        }
+    });
+
+    fetch("game.nes")
+        .then(response => response.arrayBuffer())
+        .then(buffer => {
+            nes.loadROM(buffer);
+            interval = setInterval(function() {
+                nes.frame();
+            }, 1000 / 60);
+        });
+}
+
+window.addEventListener("keydown", function(e) {
+    if (!nes) return;
+
+    const keyMap = {
+        38: jsnes.Controller.BUTTON_UP,
+        40: jsnes.Controller.BUTTON_DOWN,
+        37: jsnes.Controller.BUTTON_LEFT,
+        39: jsnes.Controller.BUTTON_RIGHT,
+        90: jsnes.Controller.BUTTON_A,
+        88: jsnes.Controller.BUTTON_B,
+        13: jsnes.Controller.BUTTON_START,
+        16: jsnes.Controller.BUTTON_SELECT
+    };
+
+    const button = keyMap[e.keyCode];
+    if (button !== undefined) {
+        nes.buttonDown(1, button);
+    }
+});
+
+window.addEventListener("keyup", function(e) {
+    if (!nes) return;
+
+    const keyMap = {
+        38: jsnes.Controller.BUTTON_UP,
+        40: jsnes.Controller.BUTTON_DOWN,
+        37: jsnes.Controller.BUTTON_LEFT,
+        39: jsnes.Controller.BUTTON_RIGHT,
+        90: jsnes.Controller.BUTTON_A,
+        88: jsnes.Controller.BUTTON_B,
+        13: jsnes.Controller.BUTTON_START,
+        16: jsnes.Controller.BUTTON_SELECT
+    };
+
+    const button = keyMap[e.keyCode];
+    if (button !== undefined) {
+        nes.buttonUp(1, button);
+    }
+});
+    </script>
 </body>
 </html>
