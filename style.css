@@ -132,3 +132,19 @@ body {
     cursor: pointer;
     user-select: none;
 }
+.pianoKey {
+    width: 60px;
+    height: 200px;
+    background: white;
+    border: 2px solid black;
+    margin: 5px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.pianoKey.active {
+    background: pink;
+}
