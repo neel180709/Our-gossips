@@ -158,18 +158,3 @@ body {
         opacity: 0;
     }
 }
-.popup-flower-top {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 180px;
-    pointer-events: none;
-}
-
-.popup-flower-bottom {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 200px;
-    pointer-events: none;
-}
