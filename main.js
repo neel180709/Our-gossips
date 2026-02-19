@@ -355,3 +355,41 @@ function resetTurn() {
 function restartMemoryGame() {
     startMemoryGame();
 }    
+function openPiano() {
+    document.getElementById("pianoPopup").style.display = "flex";
+}
+
+function closePiano() {
+    document.getElementById("pianoPopup").style.display = "none";
+}
+
+const pianoSounds = {
+    C: new Audio("https://www.soundjay.com/buttons/sounds/button-3.mp3"),
+    D: new Audio("https://www.soundjay.com/buttons/sounds/button-4.mp3"),
+    E: new Audio("https://www.soundjay.com/buttons/sounds/button-5.mp3"),
+    F: new Audio("https://www.soundjay.com/buttons/sounds/button-6.mp3"),
+    G: new Audio("https://www.soundjay.com/buttons/sounds/button-7.mp3")
+};
+
+window.addEventListener("keydown", function(e) {
+    const keyMap = {
+        a: "C",
+        s: "D",
+        d: "E",
+        f: "F",
+        g: "G"
+    };
+
+    const note = keyMap[e.key];
+    if (!note) return;
+
+    const sound = pianoSounds[note];
+    sound.currentTime = 0;
+    sound.play();
+
+    const key = document.querySelector(`[data-note="${note}"]`);
+    if (key) {
+        key.classList.add("active");
+        setTimeout(() => key.classList.remove("active"), 200);
+    }
+});
