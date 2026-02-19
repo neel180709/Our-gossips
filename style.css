@@ -148,3 +148,7 @@ body {
 .pianoKey.active {
     background: pink;
 }
+.note img {
+    display: block;
+    margin: 15px auto;
+}
