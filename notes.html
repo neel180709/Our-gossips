@@ -4,7 +4,7 @@
 <title>Our Little World 💕</title>
 <link rel="stylesheet" href="style.css">
 </head>
-<script src="https://unpkg.com/jsnes/dist/jsnes.min.js"></script>
+
 <body class="notes-body">
 
 <script>
@@ -164,29 +164,42 @@ Tap to see 🙈
     <img src="chibi.png" id="animeSprite">
 <script src="main.js"></script>
     <!-- 🎮 NES Game Box -->
-<div style="background:white; padding:20px; margin:40px auto; width:650px; text-align:center; border-radius:12px;">
+<div style="background:white; padding:20px; margin:40px auto; width:90%; max-width:650px; text-align:center; border-radius:12px;">
     <h2>Play NES Game 🎮</h2>
-    <canvas id="nesCanvas" width="256" height="240" style="border:2px solid black;"></canvas>
+    <canvas id="nesCanvas" width="256" height="240" style="border:2px solid black; width:100%; max-width:500px;"></canvas>
     <br><br>
     <button onclick="startNES()">Run Game</button>
+
+    <!-- 📱 Mobile Controls -->
+    <div style="margin-top:15px;">
+        <button class="mBtn" data-key="38">⬆</button><br>
+        <button class="mBtn" data-key="37">⬅</button>
+        <button class="mBtn" data-key="40">⬇</button>
+        <button class="mBtn" data-key="39">➡</button>
+        <br><br>
+        <button class="mBtn" data-key="90">A</button>
+        <button class="mBtn" data-key="88">B</button>
+        <button class="mBtn" data-key="13">Start</button>
+        <button class="mBtn" data-key="16">Select</button>
+    </div>
 </div>
-    <script>
+
+<script>
 let nes;
-let frameBuffer;
-let imageData;
-let interval;
+let animationFrame;
 
 function startNES() {
 
+    if (nes) return;
+
     const canvas = document.getElementById("nesCanvas");
     const ctx = canvas.getContext("2d");
-
-    imageData = ctx.createImageData(256, 240);
+    const imageData = ctx.createImageData(256, 240);
 
     nes = new jsnes.NES({
-        onFrame: function(frameBuffer_) {
-            for (let i = 0; i < frameBuffer_.length; i++) {
-                const color = frameBuffer_[i];
+        onFrame: function(frameBuffer) {
+            for (let i = 0; i < frameBuffer.length; i++) {
+                const color = frameBuffer[i];
                 imageData.data[i * 4 + 0] = (color >> 16) & 0xFF;
                 imageData.data[i * 4 + 1] = (color >> 8) & 0xFF;
                 imageData.data[i * 4 + 2] = color & 0xFF;
@@ -196,16 +209,23 @@ function startNES() {
         }
     });
 
-    fetch("game.nes")
-        .then(response => response.arrayBuffer())
+    fetch("game.nes.txt")   /* IMPORTANT */
+        .then(res => res.arrayBuffer())
         .then(buffer => {
             nes.loadROM(buffer);
-            interval = setInterval(function() {
+            function gameLoop() {
                 nes.frame();
-            }, 1000 / 60);
+                animationFrame = requestAnimationFrame(gameLoop);
+            }
+            gameLoop();
+        })
+        .catch(err => {
+            alert("Game failed to load. Check file name.");
+            console.error(err);
         });
 }
 
+/* Desktop Controls */
 window.addEventListener("keydown", function(e) {
     if (!nes) return;
 
@@ -221,9 +241,7 @@ window.addEventListener("keydown", function(e) {
     };
 
     const button = keyMap[e.keyCode];
-    if (button !== undefined) {
-        nes.buttonDown(1, button);
-    }
+    if (button !== undefined) nes.buttonDown(1, button);
 });
 
 window.addEventListener("keyup", function(e) {
@@ -241,10 +259,21 @@ window.addEventListener("keyup", function(e) {
     };
 
     const button = keyMap[e.keyCode];
-    if (button !== undefined) {
-        nes.buttonUp(1, button);
-    }
+    if (button !== undefined) nes.buttonUp(1, button);
 });
-    </script>
+
+/* Mobile Touch Controls */
+document.addEventListener("touchstart", function(e) {
+    if (!e.target.classList.contains("mBtn") || !nes) return;
+    const key = parseInt(e.target.getAttribute("data-key"));
+    window.dispatchEvent(new KeyboardEvent("keydown", {keyCode:key}));
+});
+
+document.addEventListener("touchend", function(e) {
+    if (!e.target.classList.contains("mBtn") || !nes) return;
+    const key = parseInt(e.target.getAttribute("data-key"));
+    window.dispatchEvent(new KeyboardEvent("keyup", {keyCode:key}));
+});
+</script>
 </body>
-</html>
+</html
