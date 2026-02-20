@@ -393,3 +393,76 @@ window.addEventListener("keydown", function(e) {
         setTimeout(() => key.classList.remove("active"), 200);
     }
 });
+let starsStarted = false;
+let starInterval;
+
+// Check time every 10 seconds
+setInterval(function() {
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+
+    // 11:11 AM (11) OR 11:11 PM (23)
+    if ((hours === 11 || hours === 23) && minutes === 11 && !starsStarted) {
+        starsStarted = true;
+        startStars();
+    }
+
+    // Stop stars when minute changes
+    if (minutes !== 11 && starsStarted) {
+        starsStarted = false;
+        clearInterval(starInterval);
+    }
+
+}, 10000);
+
+
+// Start creating stars
+function startStars() {
+    starInterval = setInterval(createStar, 1200);
+}
+
+
+// Create one shooting star
+function createStar() {
+    const star = document.createElement("div");
+    star.classList.add("shooting-star");
+
+    // Random side
+    if (Math.random() < 0.5) {
+        star.style.left = "0px";
+    } else {
+        star.style.left = "100%";
+    }
+
+    // Random top position (upper half only)
+    star.style.top = Math.random() * 30 + "%";
+
+    // When tapped → show wish
+    star.addEventListener("click", function() {
+        showWish();
+        star.remove();
+    });
+
+    document.body.appendChild(star);
+
+    // Remove automatically after animation
+    setTimeout(function() {
+        star.remove();
+    }, 2000);
+}
+
+
+// Show secret wish
+function showWish() {
+    const wishBox = document.createElement("div");
+    wishBox.classList.add("wish-box");
+
+    wishBox.innerHTML = "✨ Make a wish... The universe is listening ✨";
+
+    document.body.appendChild(wishBox);
+
+    setTimeout(function() {
+        wishBox.remove();
+    }, 4000);
+}
