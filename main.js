@@ -456,9 +456,9 @@ function createStar() {
 // Show secret wish
 function showWish() {
     const wishBox = document.createElement("div");
-    wishBox.classList.add("wish-box");
+    wishBox.classList.add("wish-box💌");
 
-    wishBox.innerHTML = "✨ Make a wish... The universe is listening ✨";
+    wishBox.innerHTML = "✨ Make a wish💌... The universe is listening♾️ ✨,Maine to maang liya tumhe,apni har dua mein,apni har chahat mein,,kasam se,agar universe ne pure haq se tumhe mera bana diya na,to kabhi juda nahin hone dunga tumhe ,💗,sach mein,nohot pyaar karunga,meri pyaari biwi 💕,";
 
     document.body.appendChild(wishBox);
 
