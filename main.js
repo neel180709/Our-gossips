@@ -393,32 +393,93 @@ window.addEventListener("keydown", function(e) {
         setTimeout(() => key.classList.remove("active"), 200);
     }
 });
-/* 🤍 Exam Box */
-.exam-box {
-    background: white;
-    max-width: 500px;
-    margin: 50px auto;
-    padding: 25px;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    text-align: center;
+// 📂 Open Folder Logic
+function openFolder(subject) {
+    const content = document.getElementById("folderContent");
+
+    if (subject === "english") {
+        content.innerHTML = `
+            <p><b>English Resources:</b></p>
+            <p>
+                <a href="english-notes.pdf" download>
+                    📄 TAP to download resource
+                </a>
+            </p>
+            <p style="font-size:12px; color:gray;">
+                (Try drawing a heart on screen 💌)
+            </p>
+        `;
+    } else {
+        content.innerHTML = `
+            <p>Yet, there is no Resource 📭</p>
+        `;
+    }
+}
+// 💖 Secret Heart Detection
+let points = [];
+let drawing = false;
+
+document.addEventListener("touchstart", startDraw);
+document.addEventListener("touchmove", recordDraw);
+document.addEventListener("touchend", endDraw);
+
+document.addEventListener("mousedown", startDraw);
+document.addEventListener("mousemove", recordDraw);
+document.addEventListener("mouseup", endDraw);
+
+function startDraw(e) {
+    drawing = true;
+    points = [];
 }
 
-.folder {
-    background: #ffe6f0;
-    padding: 12px;
-    margin: 10px 0;
-    border-radius: 12px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.3s;
+function recordDraw(e) {
+    if (!drawing) return;
+
+    let x = e.touches ? e.touches[0].clientX : e.clientX;
+    let y = e.touches ? e.touches[0].clientY : e.clientY;
+
+    points.push({x, y});
 }
 
-.folder:hover {
-    background: #ffb6d9;
+function endDraw() {
+    drawing = false;
+
+    if (points.length > 50) {
+        checkHeartShape();
+    }
 }
 
-#folderContent {
-    margin-top: 20px;
-    font-size: 16px;
+function checkHeartShape() {
+    let minX = Math.min(...points.map(p => p.x));
+    let maxX = Math.max(...points.map(p => p.x));
+    let minY = Math.min(...points.map(p => p.y));
+    let maxY = Math.max(...points.map(p => p.y));
+
+    let width = maxX - minX;
+    let height = maxY - minY;
+
+    // Very simple loose heart check (20% approx)
+    if (width > 80 && height > 80) {
+        showSecretMessage();
+    }
+}
+
+function showSecretMessage() {
+    const popup = document.createElement("div");
+    popup.classList.add("wish-box");
+
+    popup.innerHTML = `
+        Hello meri bachchi 💌,<br><br>
+        I know, exams are never easy, especially when you haven't prepared the whole year,
+        but don't worry bachchi 💌, I am with you.<br><br>
+        Ham saath mein achha future zaroor banayenge,
+        tum chinta mat karo, bharosa rakho mujhpar aur God par,
+        paper achha jaayega 🥰❣️💕💞💕💞💕💞💕💞💕💌
+    `;
+
+    document.body.appendChild(popup);
+
+    setTimeout(() => {
+        popup.remove();
+    }, 8000);
 }
