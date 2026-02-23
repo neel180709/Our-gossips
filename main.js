@@ -401,7 +401,7 @@ function openFolder(subject) {
         content.innerHTML = `
             <p><b>English Resources:</b></p>
             <p>
-                <a href="english-notes.pdf" download>
+                <a href="EnglishPDF1" download>
                     📄 TAP to download resource
                 </a>
             </p>
